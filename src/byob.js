@@ -2071,6 +2071,15 @@ BlockDialogMorph.prototype.createTypeButtons = function () {
         block,
         () => this.blockType === 'predicate'
     );
+
+    /*block = new HatBlockMorph();
+    block.setColor(clr);
+    block.setSpec(localize('Hat'));
+    this.addBlockTypeButton(
+        () => this.setType('hat'),
+        block,
+        () => this.blockType === 'hat'
+    );*/
 };
 
 BlockDialogMorph.prototype.addBlockTypeButton = function (
@@ -2839,6 +2848,7 @@ function BlockLabelFragment(labelString) {
     this.type = '%s';    // null for label, a spec for an input
     this.defaultValue = '';
     this.options = '';
+    this.minmax = '';
     this.isReadOnly = false; // for input slots
     this.isDeleted = false;
 }
@@ -2900,6 +2910,7 @@ BlockLabelFragment.prototype.copy = function () {
     ans.type = this.type;
     ans.defaultValue = this.defaultValue;
     ans.options = this.options;
+    ans.minmax = this.minmax;
     ans.isReadOnly = this.isReadOnly;
     return ans;
 };
@@ -2908,6 +2919,10 @@ BlockLabelFragment.prototype.copy = function () {
 
 BlockLabelFragment.prototype.hasOptions = function () {
     return this.options !== '' && !this.hasSpecialMenu();
+};
+
+BlockLabelFragment.prototype.hasMinMax = function () {
+    return this.minmax !== '' && !this.hasSpecialMenu();
 };
 
 BlockLabelFragment.prototype.hasSpecialMenu = function () {
@@ -2922,14 +2937,16 @@ BlockLabelFragment.prototype.hasSpecialMenu = function () {
             '§_pianoKeyboardMenu',
             '§_directionDialMenu'
         ],
-        this.options
+        this.options,
+        this.minmax
     );
 };
 
 BlockLabelFragment.prototype.hasExtensionMenu = function () {
     return contains(
         Array.from(SnapExtensions.menus.keys()).map(str => '§_ext_' + str),
-        this.options
+        this.options,
+        this.minmax
     );
 };
 
@@ -3287,7 +3304,7 @@ InputSlotDialogMorph.uber = DialogBoxMorph.prototype;
 // InputSlotDialogMorph preferences settings:
 
 // if "isLaunchingExpanded" is true I always open in the long form
-InputSlotDialogMorph.prototype.isLaunchingExpanded = false;
+InputSlotDialogMorph.prototype.isLaunchingExpanded = true;
 
 // InputSlotDialogMorph instance creation:
 
@@ -3578,6 +3595,7 @@ InputSlotDialogMorph.prototype.createSlotTypeButtons = function () {
     this.addSlotTypeButton('Command\n(C-shape)', ['%cs', '%ca']);
     this.addSlotTypeButton('Any\n(unevaluated)', '%anyUE');
     this.addSlotTypeButton('Boolean\n(unevaluated)', '%boolUE');
+    this.addSlotTypeButton('Color', '%clr');
 
     // arity and upvars
     this.slots.radioButtonSingle = this.addSlotArityButton(
@@ -3723,6 +3741,10 @@ InputSlotDialogMorph.prototype.setSlotArity = function (arity) {
 
 InputSlotDialogMorph.prototype.setSlotOptions = function (text) {
     this.fragment.options = text;
+};
+
+InputSlotDialogMorph.prototype.setSlotMinMax = function (text) {
+    this.fragment.minmax = text;
 };
 
 InputSlotDialogMorph.prototype.addSlotTypeButton = function (
@@ -3913,6 +3935,12 @@ InputSlotDialogMorph.prototype.addSlotsMenu = function () {
                     localize('read-only'),
                 () => this.fragment.isReadOnly = !this.fragment.isReadOnly
             );
+            menu.addItem(
+                (this.fragment.hasMinMax() ? on : off) +
+                    localize('min-max') +
+                    '...',
+                'editSlotMinMax'
+            );
             menu.addLine();
             menu.addMenu(
                 (this.fragment.hasSpecialMenu() ? on : off) +
@@ -3952,6 +3980,21 @@ InputSlotDialogMorph.prototype.editSlotOptions = function () {
             'Optionally use "=" as key/value delimiter ' +
             'and {} for submenus. ' +
             'e.g.\n   the answer=42')
+    );
+};
+
+InputSlotDialogMorph.prototype.editSlotMinMax = function () {
+    new DialogBoxMorph(
+        this,
+        minmax => this.fragment.minmax = minmax.trim(),
+        this
+    ).promptCode(
+        'Input Slot Min And Max',
+        this.fragment.minmax,
+        this.world(),
+        null,
+        localize('Min on line 1\n' +
+            'Max on line 2')
     );
 };
 

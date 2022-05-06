@@ -455,7 +455,7 @@ SpriteMorph.prototype.initBlocks = function () {
             defaults: [['pen trails'], localize('screenshot')]
         },
         reportCostumes: {
-            dev: true,
+            //dev: true,
             type: 'reporter',
             category: 'looks',
             spec: 'wardrobe'
@@ -639,6 +639,11 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'pen',
             spec: 'set pen %clrdim to %n',
             defaults: [['hue'], 50]
+        },
+        setColorDim: {
+            type: 'reporter',
+            category: 'pen',
+            spec: 'set %clr s %rgb to %n'
         },
         changePenColorDimension: {
             only: SpriteMorph,
@@ -1634,6 +1639,19 @@ SpriteMorph.prototype.initBlockMigrations = function () {
         setPenHSVA: {
             selector: 'setPenColorDimension'
         },
+        setCHue: {
+            selector: 'setColorDim',
+            inputs: [['hue']],
+            offset: 1
+        },
+        setCBrightness: {
+            selector: 'setColorDim',
+            inputs: [['brightness']],
+            offset: 1
+        },
+        setCHSVA: {
+            selector: 'setColorDim'
+        },
         changeHue: {
             selector: 'changePenColorDimension',
             inputs: [['hue']],
@@ -2532,6 +2550,7 @@ SpriteMorph.prototype.blockTemplates = function (
         blocks.push(block('setColor'));
         blocks.push(block('changePenColorDimension'));
         blocks.push(block('setPenColorDimension'));
+        blocks.push(block('setColorDim'));
         blocks.push(block('getPenAttribute'));
         blocks.push('-');
         blocks.push(block('changeSize'));

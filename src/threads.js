@@ -4911,6 +4911,19 @@ Process.prototype.setColorDimension = function (name, num) {
     );
 };
 
+Process.prototype.setCDimension = function (name, num) {
+    var options = ['hue', 'saturation', 'brightness', 'transparency'],
+        choice = this.inputOption(name);
+    if (choice === 'r-g-b(-a)') {
+        this.blockReceiver().setColorRGBA(num);
+        return;
+    }
+    this.blockReceiver().setCDimension(
+        options.indexOf(choice),
+        +num
+    );
+};
+
 Process.prototype.changeColorDimension = function (name, num) {
     var options = ['hue', 'saturation', 'brightness', 'transparency'],
         choice = this.inputOption(name);
@@ -4926,6 +4939,9 @@ Process.prototype.changeColorDimension = function (name, num) {
 
 Process.prototype.setPenColorDimension =
     Process.prototype.setColorDimension;
+
+Process.prototype.setColorDim =
+    Process.prototype.setCDimension;
 
 Process.prototype.changePenColorDimension =
     Process.prototype.changeColorDimension;

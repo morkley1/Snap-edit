@@ -323,8 +323,8 @@ SyntaxElementMorph.prototype.labelParts = {
         tags: 'numeric'
     },
     '%txt': {
-        type: 'input',
-        tags: 'landscape'
+        type: 'input'//,
+        //tags: 'landscape'
     },
     '%anyUE': {
         type: 'input',
@@ -737,6 +737,16 @@ SyntaxElementMorph.prototype.labelParts = {
             'false' : ['false']
         }
     },
+    '%rgb': {
+        type: 'input',
+        tags: 'read-only',
+        menu: {
+            'R': ['R'],
+            'G': ['G'],
+            'B': ['B'],
+            'A': ['A']
+        }
+    },
     '%var': {
         type: 'input',
         tags: 'read-only static',
@@ -999,8 +1009,8 @@ SyntaxElementMorph.prototype.labelParts = {
 
     // other single types
     '%clr': {
-        type: 'color',
-        tags: 'static'
+        type: 'color'//,
+        //tags: 'static'
     },
     '%br': {
         type: 'break'
@@ -7380,6 +7390,7 @@ ScriptsMorph.prototype.render = function (aContext) {
 };
 
 ScriptsMorph.prototype.getRenderColor = function () {
+    return new Color(30, 30, 30);
     if (MorphicPreferences.isFlat ||
             SyntaxElementMorph.prototype.alpha > 0.85) {
         return this.color;
