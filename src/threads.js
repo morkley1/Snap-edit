@@ -4911,17 +4911,8 @@ Process.prototype.setColorDimension = function (name, num) {
     );
 };
 
-Process.prototype.setCDimension = function (name, num) {
-    var options = ['hue', 'saturation', 'brightness', 'transparency'],
-        choice = this.inputOption(name);
-    if (choice === 'r-g-b(-a)') {
-        this.blockReceiver().setColorRGBA(num);
-        return;
-    }
-    this.blockReceiver().setCDimension(
-        options.indexOf(choice),
-        +num
-    );
+Process.prototype.setColorDim = function (aColor, name, num) {
+    return new color(aColor.r, num, aColor.b, aColor.a);
 };
 
 Process.prototype.changeColorDimension = function (name, num) {
