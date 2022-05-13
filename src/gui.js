@@ -4523,11 +4523,12 @@ IDE_Morph.prototype.parseResourceFile = function (text) {
     return items;
 };
 
-IDE_Morph.prototype.importLocalFile = function () {
+IDE_Morph.prototype.importLocalFile = function (ov) {
     var inp = document.createElement('input'),
         addingScenes = this.isAddingScenes,
         myself = this,
         world = this.world();
+        overide = ov || false;
 
     if (this.filePicker) {
         document.body.removeChild(this.filePicker);
@@ -6479,7 +6480,8 @@ IDE_Morph.prototype.createNewProject = function () {
 
 IDE_Morph.prototype.addScene = function () {
     var setting = this.isAddingScenes;
-    if (location.protocol === 'file:') {
+    if (true &&
+        location.protocol === 'file:') {
         // bypass the project import dialog and directly pop up
         // the local file picker.
         // this should not be necessary, we should be able
@@ -6494,7 +6496,8 @@ IDE_Morph.prototype.addScene = function () {
 };
 
 IDE_Morph.prototype.openProjectsBrowser = function () {
-    if (location.protocol === 'file:') {
+    if (false &&
+        location.protocol === 'file:') {
         // bypass the project import dialog and directly pop up
         // the local file picker.
         // this should not be necessary, we should be able
