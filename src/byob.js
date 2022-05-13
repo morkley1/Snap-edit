@@ -3661,6 +3661,7 @@ InputSlotDialogMorph.prototype.createSlotTypeButtons = function () {
     this.slots.defaultSwitch = defSwitch;
     this.slots.add(defSwitch);
 
+    /*
     defPick = new ColorSlotMorph(this.fragment.defaultValue);
     defPick.refresh = () => {
         if (this.isExpanded && contains(
@@ -3674,7 +3675,7 @@ InputSlotDialogMorph.prototype.createSlotTypeButtons = function () {
         }
     };
     this.slots.defaultPick = defPick;
-    this.slots.add(defPick);
+    this.slots.add(defPick);//*/
 
     // loop arrow checkbox //
     loopArrow = new ToggleMorph(
