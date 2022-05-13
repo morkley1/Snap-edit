@@ -2877,7 +2877,7 @@ BlockLabelFragment.prototype.defTemplateSpecFragment = function () {
     } else if (this.type === '%obj') {
         suff = ' %turtleOutline';
     } else if (contains(
-            ['%cmdRing', '%repRing', '%predRing', '%anyUE', '%boolUE'],
+            ['%cmdRing', '%repRing', '%predRing', '%anyUE', '%boolUE', '%clrUE'],
             this.type
         )) {
         suff = ' \u03BB';
@@ -3661,15 +3661,16 @@ InputSlotDialogMorph.prototype.createSlotTypeButtons = function () {
     this.slots.defaultSwitch = defSwitch;
     this.slots.add(defSwitch);
 
-    /*
+    //*
     defPick = new ColorSlotMorph(this.fragment.defaultValue);
     defPick.refresh = () => {
         if (this.isExpanded && contains(
             ['%clr', '%clrUE'],
             this.fragment.type
         )) {
-            defPick.fixLayout();
-            defPick.show();
+            //defPick.fixLayout();
+            //defPick.show();
+            defPick.hide();
         } else {
             defPick.hide();
         }
