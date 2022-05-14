@@ -6485,6 +6485,7 @@ Process.prototype.reportNewCostume = function (pixels, width, height, name) {
     dta = ctx.createImageData(width, height);
     for (i = 0; i < src.length; i += 1) {
         px = src[i] instanceof Color ? this.colorList(src[i]).itemsArray() : [src[i]];
+        px[3] = px[3];// / 255;
         for (k = 0; k < 3; k += 1) {
             dta.data[(i * 4) + k] = px[k] === undefined ? +px[0] : +px[k];
         }

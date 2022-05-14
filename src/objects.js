@@ -10733,7 +10733,7 @@ Costume.prototype.pixels = function () {
             src.data[i],
             src.data[i + 1],
             src.data[i + 2],
-            src.data[i + 3]
+            src.data[i + 3] / 255
         ));
     }
     return new List(pixels);
