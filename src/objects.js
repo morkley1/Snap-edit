@@ -615,7 +615,23 @@ SpriteMorph.prototype.initBlocks = function () {
             type: 'reporter',
             category: 'pen',
             spec: 'color %n %n %n %n',
-            defaults: [255, 0, 0, 255],
+            defaults: [145, 26, 68, 255],
+        },
+        changeColorRGB: {
+            type: 'reporter',
+            category: 'pen',
+            spec: 'change %rgb of %clr by %n',
+            defaults: ['r']//, new Color(145, 26, 68), 1]
+        },
+        colorList: {
+            type: 'reporter',
+            category: 'pen',
+            spec: 'list of %clr',
+        },
+        listColor: {
+            type: 'reporter',
+            category: 'pen',
+            spec: 'color of %l'
         },
         getPenColor: {
             only: SpriteMorph,
@@ -2566,6 +2582,9 @@ SpriteMorph.prototype.blockTemplates = function (
 
         blocks.push(block('getColorRGB'));
         blocks.push(block('makeColorRGB'));
+        blocks.push(block('changeColorRGB'));
+        blocks.push(block('colorList'));
+        blocks.push(block('listColor'));
         blocks.push(watcherToggle('getPenColor'));
         blocks.push(block('getPenColor', this.inheritsAttribute('pen color')));
         blocks.push(block('clear'));
@@ -9020,6 +9039,9 @@ StageMorph.prototype.blockTemplates = function (
 
         blocks.push(block('getColorRGB'));
         blocks.push(block('makeColorRGB'));
+        blocks.push(block('changeColorRGB'));
+        blocks.push(block('colorList'));
+        blocks.push(block('listColor'));
         blocks.push(block('clear'));
         blocks.push('-');
         blocks.push(block('setBackgroundColor'));
@@ -10707,12 +10729,12 @@ Costume.prototype.pixels = function () {
         this.contents.height
     );
     for (i = 0; i < src.data.length; i += 4) {
-        pixels.push(new List([
+        pixels.push(new Color(
             src.data[i],
             src.data[i + 1],
             src.data[i + 2],
             src.data[i + 3]
-        ]));
+        ));
     }
     return new List(pixels);
 };

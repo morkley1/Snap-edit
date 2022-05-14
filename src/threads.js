@@ -3995,6 +3995,21 @@ Process.prototype.makeColorRGB = function (r, g, b, a) {
     return new Color(r, g, b, a/255);
 };
 
+Process.prototype.changeColorRGB = function (name, aaColor, count) {
+    var aColor = new Color(aaColor.r, aaColor.g, aaColor.b, aaColor.a);
+    eval('aColor.' + name + ' += count');
+    return aColor;
+};
+
+Process.prototype.colorList = function (aColor) {
+    return new List([aColor.r, aColor.g, aColor.b, aColor.a * 255]);
+};
+
+Process.prototype.listColor = function (aList) {
+    aList = aList.asArray();
+    return new Color(aList[0], aList[1], aList[2], aList[3] / 255);
+};
+
 Process.prototype.hyperZip = function (baseOp, a, b) {
     // enable dyadic operations to be performed on lists and tables
     var len, i, result;
@@ -6469,7 +6484,7 @@ Process.prototype.reportNewCostume = function (pixels, width, height, name) {
     src = pixels.itemsArray();
     dta = ctx.createImageData(width, height);
     for (i = 0; i < src.length; i += 1) {
-        px = src[i] instanceof List ? src[i].itemsArray() : [src[i]];
+        px = src[i] instanceof Color ? this.colorList(src[i]).itemsArray() : [src[i]];
         for (k = 0; k < 3; k += 1) {
             dta.data[(i * 4) + k] = px[k] === undefined ? +px[0] : +px[k];
         }
