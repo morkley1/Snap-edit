@@ -1031,6 +1031,11 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'sensing',
             spec: 'mouse down?'
         },
+        reportWhatKeysPressed: {
+            type: 'reporter',
+            category: 'sensing',
+            spec: 'keys pressed',
+        },
         reportKeyPressed: {
             type: 'predicate',
             category: 'sensing',
@@ -2683,6 +2688,7 @@ SpriteMorph.prototype.blockTemplates = function (
         blocks.push(block('reportMouseDown'));
         blocks.push('-');
         blocks.push(block('reportKeyPressed'));
+        blocks.push(block('reportWhatKeysPressed'));
         blocks.push('-');
         blocks.push(block('reportRelationTo'));
         blocks.push(block('reportAspect'));
@@ -9119,6 +9125,7 @@ StageMorph.prototype.blockTemplates = function (
         blocks.push(block('reportMouseDown'));
         blocks.push('-');
         blocks.push(block('reportKeyPressed'));
+        blocks.push(block('reportWhatKeysPressed'));
         blocks.push('-');
         blocks.push(block('reportAspect'));
         blocks.push('-');
