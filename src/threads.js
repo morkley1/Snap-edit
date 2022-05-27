@@ -6056,6 +6056,18 @@ Process.prototype.reportMouseDown = function () {
     return false;
 };
 
+Process.prototype.reportWhatKeysPressed = function () {
+    // hyper-monadic
+    var stage;
+    if (this.homeContext.receiver) {
+        stage = this.homeContext.receiver.parentThatIsA(StageMorph);
+        if (stage) {
+            return new List(Object.keys(stage.keysPressed));
+        }
+    }
+    return new List([]);
+};
+
 Process.prototype.reportKeyPressed = function (keyString) {
     // hyper-monadic
     var stage;
