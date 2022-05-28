@@ -1729,13 +1729,12 @@ Process.prototype.doSetClip = function (text) {
 };
 
 Process.prototype.doGetClip = function () {
-    let ot;
-    (async () => {
-        const text = await navigator.clipboard.readText();
-        console.log(text);
-	ot = text;
-    })();
-    return ot;
+    navigator.clipboard
+        .readText()
+        .then(
+            cliptext => { return cliptext; },
+            err => { console.log(err) }
+        );
 };
 
 Process.prototype.doSetVar = function (varName, value) {

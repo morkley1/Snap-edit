@@ -95,7 +95,8 @@ var SnapVersion = '7.3.1';
 
 var IDE_Morph;
 var ProjectDialogMorph;
-var LibraryImportDialogMorph;
+var LibraryImportDialogMorph; 
+var ClassDialogMorph;
 var SpriteIconMorph;
 var CostumeIconMorph;
 var TurtleIconMorph;
@@ -2008,6 +2009,35 @@ IDE_Morph.prototype.createCorralBar = function () {
     );
     this.corralBar.add(paintbutton);
 
+    // new class button
+    classbutton = new PushButtonMorph(
+        this,
+        "addNewClass",
+        new SymbolMorph("turtle", 14)
+    );
+    classbutton.corner = 12;
+    classbutton.color = colors[0];
+    classbutton.highlightColor = colors[1];
+    classbutton.pressColor = colors[2];
+    classbutton.labelMinExtent = new Point(36, 18);
+    classbutton.padding = 0;
+    classbutton.labelShadowOffset = new Point(-1, -1);
+    classbutton.labelShadowColor = colors[1];
+    classbutton.labelColor = this.buttonLabelColor;
+    classbutton.contrast = this.buttonContrast;
+    classbutton.hint = "add a new Class";
+    classbutton.fixLayout();
+    classbutton.setCenter(this.corralBar.center());
+    classbutton.setLeft(
+        this.corralBar.left() +
+        padding +
+        newbutton.width() +
+        padding +
+        paintbutton.width() +
+        padding
+    );
+    this.corralBar.add(classbutton);
+
     if (CamSnapshotDialogMorph.prototype.enableCamera) {
         cambutton = new PushButtonMorph(
                 this,
@@ -2034,6 +2064,8 @@ IDE_Morph.prototype.createCorralBar = function () {
             newbutton.width() +
             padding +
             paintbutton.width() +
+            padding +
+            classbutton.width() +
             padding
         );
         this.corralBar.add(cambutton);
@@ -3227,6 +3259,98 @@ IDE_Morph.prototype.paintNewSprite = function () {
             this.recordUnsavedChanges();
         }
     );
+};
+
+// ClassDialogMorph ////////////////////////////////////////////////
+
+// ... "inherits" some methods from BlockDialogMorph
+
+// ClassDialogMorph inherits from DialogBoxMorph:
+
+ClassDialogMorph.prototype = new DialogBoxMorph();
+ClassDialogMorph.prototype.constructor = ClassDialogMorph;
+ClassDialogMorph.uber = DialogBoxMorph.prototype;
+
+function ClassDialogMorph(
+    //fragment,
+    //target,
+    //action,
+    //environment,
+    //category
+) {
+    this.init();//fragment, target, action, environment, category);
+}
+
+ClassDialogMorph.prototype.init = function (
+    //fragment,
+    target,
+    action,
+    environment,
+    //category
+) {
+    var scale = SyntaxElementMorph.prototype.scale,
+        fh = fontHeight(10) / 1.2 * scale; // "raw height"
+
+    // additional properties:
+    //this.fragment = fragment || new BlockLabelFragment();
+    this.textfield = null;
+    this.types = null;
+    this.slots = null;
+    this.isExpanded = false;
+    //this.category = category || 'other';
+    this.noDelete = false;
+
+    // initialize inherited properties:
+    BlockDialogMorph.uber.init.call(
+        this,
+        target,
+        action,
+        environment
+    );
+
+    // override inherited properites:
+    this.types = new AlignmentMorph('row', this.padding);
+    this.types.respectHiddens = true; // prevent the arrow from flipping
+    this.add(this.types);
+    //this.slots = new BoxMorph();
+    //this.slots.color = new Color(55, 55, 55); // same as palette
+    //this.slots.borderColor = this.slots.color.lighter(50);
+    //this.slots.setExtent(new Point((fh + 10) * 24, (fh + 10 * scale) * 10.4));
+    //this.add(this.slots);
+    //this.createSlotTypeButtons();
+    //this.fixSlotsLayout();
+    //this.addSlotsMenu();
+    //this.createTypeButtons();
+    this.fixLayout();
+};
+
+IDE_Morph.prototype.addNewClass = function () {
+    var //sprite = new SpriteMorph(this.globalVariables),
+        rnd = Process.prototype.reportBasicRandom;
+
+    new ClassDialogMorph();
+
+    /*sprite.name = this.newSpriteName(sprite.name);
+    sprite.setCenter(this.stage.center());
+    this.stage.add(sprite);
+    sprite.fixLayout();
+    sprite.rerender();
+
+    // randomize sprite properties
+    sprite.setColorDimension(0, rnd.call(this, 0, 100));
+    sprite.setColorDimension(1, 100);
+    sprite.setColorDimension(2, rnd.call(this, 25, 75));
+
+    sprite.setXPosition(rnd.call(this, -220, 220));
+    sprite.setYPosition(rnd.call(this, -160, 160));
+
+    if (this.world().currentKey === 16) { // shift-click
+        sprite.turn(rnd.call(this, 1, 360));
+    }
+
+    this.sprites.add(sprite);
+    this.corral.addSprite(sprite);
+    this.selectSprite(sprite);*/
 };
 
 IDE_Morph.prototype.newCamSprite = function () {
