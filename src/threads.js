@@ -1724,6 +1724,20 @@ Process.prototype.doDeclareVariables = function (varNames) {
     );
 };
 
+Process.prototype.doSetClip = function (text) {
+    navigator.clipboard.writeText(text);
+};
+
+Process.prototype.doGetClip = function () {
+    let ot;
+    (async () => {
+        const text = await navigator.clipboard.readText();
+        console.log(text);
+	ot = text;
+    })();
+    return ot;
+};
+
 Process.prototype.doSetVar = function (varName, value) {
     var varFrame = this.context.variables,
         name = varName;
