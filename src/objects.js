@@ -1585,7 +1585,7 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'set clipboard to %txt'
         },
         doGetClip: {
-            type: 'command',
+            type: 'reporter',
             category: 'other',
             spec: 'get clipboard'
         },
