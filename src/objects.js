@@ -1579,6 +1579,16 @@ SpriteMorph.prototype.initBlocks = function () {
             category: 'other',
             spec: 'code of %cmdRing'
         },
+        doSetClip: {
+            type: 'command',
+            category: 'other',
+            spec: 'set clipboard to %txt'
+        },
+        doGetClip: {
+            type: 'command',
+            category: 'other',
+            spec: 'get clipboard'
+        },
 
         // Extensions
         doApplyExtension: {
@@ -2848,6 +2858,9 @@ SpriteMorph.prototype.blockTemplates = function (
         blocks.push(block('doDeleteFromList'));
         blocks.push(block('doInsertInList'));
         blocks.push(block('doReplaceInList'));
+        blocks.push('-');
+        blocks.push(block('doSetClip'));
+        blocks.push(block('doGetClip'));
 
         if (SpriteMorph.prototype.showingExtensions) {
             blocks.push('=');
@@ -9279,6 +9292,9 @@ StageMorph.prototype.blockTemplates = function (
         blocks.push(block('doDeleteFromList'));
         blocks.push(block('doInsertInList'));
         blocks.push(block('doReplaceInList'));
+        blocks.push('-');
+        blocks.push(block('doSetClip'));
+        blocks.push(block('doGetClip'));
 
         if (SpriteMorph.prototype.showingExtensions) {
             blocks.push('=');
