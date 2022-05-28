@@ -2010,7 +2010,7 @@ IDE_Morph.prototype.createCorralBar = function () {
     this.corralBar.add(paintbutton);
 
     // new class button
-    classbutton = new PushButtonMorph(
+    /*classbutton = new PushButtonMorph(
         this,
         "addNewClass",
         new SymbolMorph("turtle", 14)
@@ -2036,7 +2036,7 @@ IDE_Morph.prototype.createCorralBar = function () {
         paintbutton.width() +
         padding
     );
-    this.corralBar.add(classbutton);
+    this.corralBar.add(classbutton);*/
 
     if (CamSnapshotDialogMorph.prototype.enableCamera) {
         cambutton = new PushButtonMorph(
@@ -2064,9 +2064,9 @@ IDE_Morph.prototype.createCorralBar = function () {
             newbutton.width() +
             padding +
             paintbutton.width() +
-            padding +
-            classbutton.width() +
-            padding
+            padding// +
+            //classbutton.width() +
+            //padding
         );
         this.corralBar.add(cambutton);
         document.addEventListener(
