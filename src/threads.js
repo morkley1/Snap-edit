@@ -1729,12 +1729,10 @@ Process.prototype.doSetClip = function (text) {
 };
 
 Process.prototype.doGetClip = function () {
-    navigator.clipboard
-        .readText()
-        .then(
-            cliptext => { return cliptext; },
-            err => { console.log(err) }
-        );
+    var result = null;
+	navigator.clipboard.readText().then(
+	e=>result=e,e=>result='');
+	return () => result;
 };
 
 Process.prototype.doSetVar = function (varName, value) {
