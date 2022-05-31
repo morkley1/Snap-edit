@@ -1728,13 +1728,16 @@ Process.prototype.doSetClip = function (text) {
     navigator.clipboard.writeText(text);
 };
 
-Process.prototype.doGetClip = function () {
-    this.doDeclareVariables(new List([clip]));
+Process.prototype.doGetClip = async function () {
+    const text = await navigator.clipboard.readText();
+    return text;
+    //input.value = text;
+    /*this.doDeclareVariables(new List([clip]));
     this.setVarNamed(clip, this.evaluate(Function.apply(null, new List([]).itemsArray().concat([
 	"var result = null;navigator.clipboard.readText().then(e=>result=e,e=>result='');return () => result;"
     ])), new List([]), false));
     this.doWaitUntil(this.evaluate(this.variables.getVar("clip")) || this.evaluate(this.variables.getVar("clip")) == "");
-    return this.evaluate(this.variables.getVar("clip"));
+    return this.evaluate(this.variables.getVar("clip"));*/
 };
 
 Process.prototype.doSetVar = function (varName, value) {
