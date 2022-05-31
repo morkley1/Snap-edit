@@ -1729,18 +1729,13 @@ Process.prototype.doSetClip = function (text) {
 };
 
 Process.prototype.doGetClip = function () {
-    var cliptemp = clip(),
-	called = "";
-    called = this.evaluate(cliptemp, new List([]));
-    this.doWaitUntil(called || called == "");
-    return called;
+    this.doDeclareVariables(new List([clip]));
+    this.setVarNamed(clip, this.evaluate(Function.apply(null, new List([]).itemsArray().concat([
+	"var result = null;navigator.clipboard.readText().then(e=>result=e,e=>result='');return () => result;"
+    ])), new List([]), false));
+    this.doWaitUntil(this.evaluate(this.variables.getVar("clip")) || this.evaluate(this.variables.getVar("clip")) == "");
+    return this.evaluate(this.variables.getVar("clip"));
 };
-
-function clip(){
-    var result = null;
-    navigator.clipboard.readText().then(e=>result=e,e=>result='');
-    return () => result;
-}
 
 Process.prototype.doSetVar = function (varName, value) {
     var varFrame = this.context.variables,
