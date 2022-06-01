@@ -2860,7 +2860,7 @@ SpriteMorph.prototype.blockTemplates = function (
         blocks.push(block('doReplaceInList'));
         blocks.push('-');
         blocks.push(block('doSetClip'));
-        //blocks.push(block('doGetClip'));
+        blocks.push(block('doGetClip'));
 
         if (SpriteMorph.prototype.showingExtensions) {
             blocks.push('=');
@@ -9294,7 +9294,7 @@ StageMorph.prototype.blockTemplates = function (
         blocks.push(block('doReplaceInList'));
         blocks.push('-');
         blocks.push(block('doSetClip'));
-        //blocks.push(block('doGetClip'));
+        blocks.push(block('doGetClip'));
 
         if (SpriteMorph.prototype.showingExtensions) {
             blocks.push('=');
