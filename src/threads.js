@@ -6458,8 +6458,10 @@ Process.prototype.reportNewCostumeStretched = function (name, xP, yP) {
         );
     }
     return cst.stretched(
-        Math.round(cst.width() * +xP / 100),
-        Math.round(cst.height() * +yP / 100)
+        //Math.round(/*cst.width() * */
+        +xP / 100,//),
+        //Math.round(/*cst.height() * */
+        +yP / 100//)
     );
 };
 
