@@ -10586,28 +10586,39 @@ Costume.prototype.flipped = function () {
 };
 
 Costume.prototype.stretched = function (w, h) {
-    w = (Math.sign(w) || 1) * Math.max(1, Math.abs(w));
-    h = (Math.sign(h) || 1) * Math.max(1, Math.abs(h));
+    //w = (Math.sign(w) || 1) * Math.max(1, Math.abs(w));
+    //h = (Math.sign(h) || 1) * Math.max(1, Math.abs(h));
 
     var canvas = newCanvas(new Point(Math.abs(w), Math.abs(h)), true),
         ctx = canvas.getContext('2d'),
-        xRatio = w / this.width(),
-        yRatio = h / this.height(),
+        //xRatio = w / this.width(),
+        //yRatio = h / this.height(),
         center = this.rotationCenter.multiplyBy(new Point(xRatio, yRatio)),
+	pixels = this.rasterized().pixels().asArray(),
+	pixelsOut = [],
         stretched;
 
-    if (xRatio < 0) {
+    /*if (xRatio < 0) {
         center.x = canvas.width - Math.abs(center.x);
     }
     if (yRatio < 0) {
         center.y = canvas.height - Math.abs(center.y);
-    }
+    }*/
 
-    ctx.translate(Math.abs(Math.min(w, 0)), Math.abs(Math.min(h, 0)));
-    ctx.scale(xRatio, yRatio);
+    //ctx.translate(Math.abs(Math.min(w, 0)), Math.abs(Math.min(h, 0)));
+    //ctx.scale(xRatio, yRatio);
     // first rasterize in case it's an SVG and in case it's on Firefox
     // because Firefox prevents stretching of SVGs with locked aspect ratios
-    ctx.drawImage(this.rasterized().contents, 0, 0);
+    pixels.reshape(new List([this.width(), this.height()]));
+    for (let i = 0; i < Math.round(this.height() * h); i++){
+        pixelsOut.push(new List([]));
+    }
+    for (let y = 0; y < Math.round(this.height() * h); y++){
+        for (let x = 0; x < Math.round(this.width() * w); x++){
+            pixelsOut[y].contents.push(pixels[Math.floor(y / h)][Math.floor(x / w)]);
+        }
+    }
+    ctx.drawImage(Process.prototype.reportNewCostume(new List(pixelsOut), this.width(), this.height()), 0, 0);
     stretched = new Costume(
         canvas,
         this.name,
