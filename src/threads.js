@@ -1728,9 +1728,10 @@ Process.prototype.doSetClip = function (text) {
     navigator.clipboard.writeText(text);
 };
 
-Process.prototype.doGetClip = async function () {
-    const text = await navigator.clipboard.readText();
-    return await text;
+Process.prototype.doGetClip = function () {
+    return navigator.clipboard.readText().then((text) => {
+        return text;
+    });
     //input.value = text;
     /*this.doDeclareVariables(new List([clip]));
     this.setVarNamed(clip, this.evaluate(Function.apply(null, new List([]).itemsArray().concat([
