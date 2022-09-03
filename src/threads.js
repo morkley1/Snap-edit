@@ -1736,7 +1736,7 @@ Process.prototype.doGetClip = function () {
 
     var out = new List([function() {return done}, function() {return thing}]);
     this.doWaitUntil(this.evaluate(out.at(1)));
-    return this.evaluate(out.at(2));
+    return out;//this.evaluate(out.at(2));
     //return navigator.clipboard.readText().then((clipText) => return clipText);
     //input.value = text;
     /*this.doDeclareVariables(new List([clip]));
