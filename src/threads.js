@@ -1729,9 +1729,7 @@ Process.prototype.doSetClip = function (text) {
 };
 
 Process.prototype.doGetClip = function () {
-    return navigator.clipboard.readText().then((text) => {
-        return text;
-    });
+    return navigator.clipboard.readText().then((clipText) => return clipText);
     //input.value = text;
     /*this.doDeclareVariables(new List([clip]));
     this.setVarNamed(clip, this.evaluate(Function.apply(null, new List([]).itemsArray().concat([
