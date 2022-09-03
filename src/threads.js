@@ -1729,7 +1729,15 @@ Process.prototype.doSetClip = function (text) {
 };
 
 Process.prototype.doGetClip = function () {
-    return navigator.clipboard.readText().then((clipText) => return clipText);
+    var done = false, thing = null
+    if("clipboard" in navigator) {
+        navigator.clipboard.readText(thing).then(x => {thing = x; done = true})
+    } else {alert("I can't retrieve thing from clipboard."); done = true}
+
+    var a = [function() {return done}, function() {return thing}];
+    this.doWaitUntil(this.evaluate(a[0]));
+    return this.evaluate(a[1]);
+    //return navigator.clipboard.readText().then((clipText) => return clipText);
     //input.value = text;
     /*this.doDeclareVariables(new List([clip]));
     this.setVarNamed(clip, this.evaluate(Function.apply(null, new List([]).itemsArray().concat([
