@@ -1729,14 +1729,24 @@ Process.prototype.doSetClip = function (text) {
 };
 
 Process.prototype.doGetClip = function () {
-    var done = false, thing = null
-    if("clipboard" in navigator) {
-        navigator.clipboard.readText(thing).then(x => {thing = x; done = true})
-    } else {alert("I can't retrieve thing from clipboard."); done = true}
+    var done = false, thing = null, isGetting = false
+    if (!isGetting){
+	isGetting = true
+        if("clipboard" in navigator) {
+            navigator.clipboard.readText().then(x => {thing = x; done = true})
+        } else {alert("I can't retrieve thing from clipboard."); done = true}
+    }
 
-    return new List([function() {return done}, function() {return thing}]);
-    //this.doWaitUntil(this.evaluate(out.at(1)));
-    //return out;//this.evaluate(out.at(2));
+    //return new List([function() {return done}, function() {return thing}])
+    
+    if (done) {
+        this.popContext();
+        this.pushContext('doYield');
+        return thing;
+    }
+    this.context.inputs = [];
+    this.pushContext('doYield');
+    this.pushContext();
     //return navigator.clipboard.readText().then((clipText) => return clipText);
     //input.value = text;
     /*this.doDeclareVariables(new List([clip]));
