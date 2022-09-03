@@ -1734,9 +1734,9 @@ Process.prototype.doGetClip = function () {
         navigator.clipboard.readText(thing).then(x => {thing = x; done = true})
     } else {alert("I can't retrieve thing from clipboard."); done = true}
 
-    var a = [function() {return done}, function() {return thing}];
-    this.doWaitUntil(this.evaluate(a[0]));
-    return this.evaluate(a[1]);
+    var out = new List([function() {return done}, function() {return thing}]);
+    this.doWaitUntil(this.evaluate(out.at(1)));
+    return this.evaluate(out.at(2));
     //return navigator.clipboard.readText().then((clipText) => return clipText);
     //input.value = text;
     /*this.doDeclareVariables(new List([clip]));
