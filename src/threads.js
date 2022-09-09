@@ -87,6 +87,11 @@ const NONNUMBERS = [true, false, ''];
 })();
 
 function snapEquals(a, b) {
+    // Color
+    if (a.constructor.name === b.constructor.name && a.constructor.name == "Color") {
+	return a.eq(b, true);
+    }
+
     // nil
     if (isNil(a) || isNil(b)) {
         return a === b;
@@ -98,10 +103,6 @@ function snapEquals(a, b) {
             return a.equalTo(b);
         }
         return false;
-    }
-
-    if (a.constructor.name === b.constructor.name && a.constructor.name == "Color") {
-	return a.eq(b, true);
     }
 
     var x = +a,
