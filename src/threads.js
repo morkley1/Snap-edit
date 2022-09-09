@@ -100,6 +100,10 @@ function snapEquals(a, b) {
         return false;
     }
 
+    if (a.constructor.name === b.constructor.name && a.constructor.name == "Color") {
+	return a.eq(b, true);
+    }
+
     var x = +a,
         y = +b;
 
